@@ -3,7 +3,7 @@ import pygame
 ######### IMAGES ##########
 ###########################
 
-startScreen = pygame.image.load('Assets\StartScreen.png')
+startScreen = pygame.image.load('Assets\StartScreen2.png')
 startScreenResized = pygame.transform.scale(startScreen, (1200, 650))
 
 FPS = 60
