@@ -4,9 +4,13 @@
 import pygame
 
 ### Global Image Variables ###
-fireImg = pygame.image.load('Assets\FireLord.jpg')
+fireImg = pygame.image.load('Assets\FireLord.png')
 waterImg = pygame.image.load('Assets\WaterEnemy.png')
 earthImg = pygame.image.load('Assets\EarthEnemy.png')
+
+fireImg = pygame.transform.scale(fireImg, (100, 150))
+waterImg = pygame.transform.scale(waterImg, (100, 150))
+earthImg = pygame.transform.scale(earthImg, (100, 150))
 
 class Enemy:
     ###Global Class Vars
