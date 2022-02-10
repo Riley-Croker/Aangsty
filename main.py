@@ -1,18 +1,25 @@
-import pygame 
+import pygame
+
+from player import Player 
 ###########################
 ######### IMAGES ##########
 ###########################
 
 startScreen = pygame.image.load('Assets\StartScreen2.png')
 startScreenResized = pygame.transform.scale(startScreen, (1200, 650))
+aangPic = pygame.image.load('Assets\Aang.png')
+
+###########################
+##### Player Stuff ########
+###########################
+
+aang = Player(0,0,aangPic)
 
 FPS = 60
 
 WIDTH = 1200
 HEIGHT = 650
 
-
-display_surface = pygame.display.set_mode((WIDTH, HEIGHT ))
 
 # make the game window object
 WINDOW = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -41,7 +48,8 @@ def main():
         # This fills the game window to be the given RGB color
         WINDOW.fill((0,255,0))
         
-        display_surface.blit(startScreenResized, (0, 0))
+        WINDOW.blit(startScreenResized, (0, 0))
+        aang.render(WINDOW)
 
         # handle player movement
         # this gets a list of booleans showing which keys are currently pressed
