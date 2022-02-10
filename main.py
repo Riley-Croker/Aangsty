@@ -55,6 +55,15 @@ def main():
         # this gets a list of booleans showing which keys are currently pressed
         keysPressed = pygame.key.get_pressed()
 
+        # player movement
+        if keysPressed[pygame.K_UP] == True:
+            aang.y-=5
+        elif keysPressed[pygame.K_DOWN] == True:
+            aang.y+=5
+        if keysPressed[pygame.K_LEFT] == True:
+            aang.x-=5
+        elif keysPressed[pygame.K_RIGHT] == True:
+            aang.x+=5
         
         # put code here that should be run every frame
         # of your game             
