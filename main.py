@@ -33,7 +33,6 @@ earthEnemy = Enemy(100, 100, "earth")
 
 
 FPS = 60
-clock = pygame.time.Clock()
 
 WIDTH = 1200
 HEIGHT = 650
@@ -77,7 +76,7 @@ def main():
 
         #render aang and update his timer
         aang.render(WINDOW)
-        aang.updateTime(clock)
+        aang.updateTime()
 
         #rendering and move Bullets
         for bullet in bulletList:

@@ -8,6 +8,7 @@ class Player:
     canFire = True
     timeSinceLastBullet = 0
     timeBetweenBullets = 500
+    aangClock = pygame.time.Clock()
 
     # constructor function
     def __init__(self, aX, aY, aImage):
@@ -20,8 +21,8 @@ class Player:
     def render(self, aSurface):
         aSurface.blit(self.image, (self.x,self.y))
 
-    def updateTime(self, aClock):
-        dt = aClock.tick()
+    def updateTime(self):
+        dt = self.aangClock.tick()
 
         self.timeSinceLastBullet += dt
         if self.timeSinceLastBullet > self.timeBetweenBullets:
