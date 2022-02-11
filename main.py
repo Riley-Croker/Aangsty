@@ -8,7 +8,7 @@ from Enemy import Enemy
 
 startScreen = pygame.image.load('Assets\StartScreen2.png')
 startScreenResized = pygame.transform.scale(startScreen, (1200, 650))
-fireImg = pygame.image.load('Assets\FireLord.jpg')
+
 
 ##### Make Enemies ####
 fireEnemy =  Enemy(200, 200, "fire")
@@ -51,6 +51,7 @@ def main():
         
         WINDOW.blit(startScreenResized, (0, 0))
 
+            
         #renders the enemies
         fireEnemy.render(WINDOW, "fire")
         waterEnemy.render(WINDOW, "water")
