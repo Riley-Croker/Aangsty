@@ -10,6 +10,14 @@ from player import Player
 startScreen = pygame.image.load('Assets\StartScreen2.png')
 startScreenResized = pygame.transform.scale(startScreen, (1200, 650))
 aangPic = pygame.image.load('Assets\Aang.png')
+earth = pygame.image.load('Assets\RockProjectile.png')
+earthResized = pygame.transform.scale(earth, (100, 100))
+water = pygame.image.load('Assets\waterAttack.png')
+waterResized = pygame.transform.scale(water, (100, 100))
+fire = pygame.image.load('Assets\Fireball.png')
+fireResized = pygame.transform.scale(fire, (150, 75))
+air = pygame.image.load('Assets\Aang.png')
+airResized = pygame.transform.scale(air, (100, 100))
 
 ###########################
 ##### Player Stuff ########
@@ -94,18 +102,18 @@ def main():
         elif keysPressed[pygame.K_RIGHT] == True and (aang.x + aang.width) <= WINDOW.get_width():
             aang.x+=5
 
-        #firing bullets
+        #firing bullets (-50 is half the bullet height, change if bullet height is ever changed)
         if keysPressed[pygame.K_e] == True and aang.canFire:
-            bulletList.append(Bullet(aang.x + aang.width,aang.y + aang.height/2,"Earth"))
+            bulletList.append(Bullet(aang.x + aang.width,aang.y + aang.height/2-50,"Earth",earthResized))
             aang.canFire = False
         elif keysPressed[pygame.K_w] == True and aang.canFire:
-            bulletList.append(Bullet(aang.x + aang.width,aang.y + aang.height/2,"Water"))
+            bulletList.append(Bullet(aang.x + aang.width,aang.y + aang.height/2-50,"Water",waterResized))
             aang.canFire = False
         elif keysPressed[pygame.K_a] == True and aang.canFire:
-            bulletList.append(Bullet(aang.x + aang.width,aang.y + aang.height/2,"Air"))
+            bulletList.append(Bullet(aang.x + aang.width,aang.y + aang.height/2-50,"Air",airResized))
             aang.canFire = False
         elif keysPressed[pygame.K_f] == True and aang.canFire:
-            bulletList.append(Bullet(aang.x + aang.width,aang.y + aang.height/2,"Fire"))
+            bulletList.append(Bullet(aang.x + aang.width,aang.y + aang.height/2-50,"Fire",fireResized))
             aang.canFire = False
         
         
