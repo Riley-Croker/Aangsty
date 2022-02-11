@@ -3,8 +3,6 @@ import pygame
 class Player:
     # Global class vars with constant starting values
     health = 5
-    width = 100
-    height = 100
     speed = 10
     isDead = False
 
@@ -13,6 +11,8 @@ class Player:
         self.x = aX
         self.y = aY
         self.image = aImage
+        self.height = aImage.get_height()
+        self.width = aImage.get_width()
 
     def render(self, aSurface):
         aSurface.blit(self.image, (self.x,self.y))

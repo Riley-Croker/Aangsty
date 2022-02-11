@@ -56,13 +56,13 @@ def main():
         keysPressed = pygame.key.get_pressed()
 
         # player movement
-        if keysPressed[pygame.K_UP] == True:
+        if keysPressed[pygame.K_UP] == True and aang.y >= 0:
             aang.y-=5
-        elif keysPressed[pygame.K_DOWN] == True:
+        elif keysPressed[pygame.K_DOWN] == True and (aang.y + aang.height) <= WINDOW.get_height():
             aang.y+=5
-        if keysPressed[pygame.K_LEFT] == True:
+        if keysPressed[pygame.K_LEFT] == True and aang.x >= 0:
             aang.x-=5
-        elif keysPressed[pygame.K_RIGHT] == True:
+        elif keysPressed[pygame.K_RIGHT] == True and (aang.x + aang.width) <= WINDOW.get_width():
             aang.x+=5
         
         # put code here that should be run every frame
