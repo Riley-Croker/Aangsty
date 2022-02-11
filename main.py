@@ -24,8 +24,6 @@ levelVal = 5
 enemyList = []
 
 ## Fills List With Random Enemies Based on Level Enemy Count ###
-
-
 for i in range(levelVal):
     xPos = (random.randrange(500, 1000))
     yPos = 650 - 150 
