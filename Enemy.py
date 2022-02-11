@@ -2,22 +2,22 @@
 # Imports
 ####
 import pygame
+import random
 
 ### Global Image Variables ###
 fireImg = pygame.image.load('Assets\FireLord.png')
 waterImg = pygame.image.load('Assets\WaterEnemy.png')
 earthImg = pygame.image.load('Assets\EarthEnemy.png')
 
-fireImg = pygame.transform.scale(fireImg, (100, 150))
-waterImg = pygame.transform.scale(waterImg, (100, 150))
+fireImg = pygame.transform.scale(fireImg, (100, 155))
+fireImg = pygame.transform.flip(fireImg, True, False)
+waterImg = pygame.transform.scale(waterImg, (100, 165))
 earthImg = pygame.transform.scale(earthImg, (100, 150))
 
 class Enemy:
     ###Global Class Vars
     health = 5
-    width = 100
-    height= 150
-    speed = 5
+    speed = 2
     isDead = False
 
    
@@ -43,6 +43,13 @@ class Enemy:
 
     def moveEnemy(self):
         self.x -= self.speed
+
+    
+  
+
+    
+
+
 
 
 
