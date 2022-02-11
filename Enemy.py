@@ -17,7 +17,7 @@ class Enemy:
     health = 5
     width = 100
     height= 150
-    speed = 10
+    speed = 5
     isDead = False
 
    
@@ -37,6 +37,16 @@ class Enemy:
             aSurface.blit(waterImg, (self.x, self.y))
         elif(atype == "earth"):
             aSurface.blit(earthImg, (self.x, self.y))
+
+    def setSpeed(self, aSpeed):
+        self.speed = aSpeed
+
+    def moveEnemy(self):
+        self.x -= self.speed
+
+
+
+
         
 
 
