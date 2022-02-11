@@ -1,5 +1,6 @@
-import pygame 
+import pygame
 from Enemy import Enemy
+from bullet import Bullet
 from player import Player 
 ###########################
 ######### IMAGES ##########
@@ -27,6 +28,7 @@ FPS = 60
 WIDTH = 1200
 HEIGHT = 650
 
+bulletList = []
 
 # make the game window object
 WINDOW = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -66,6 +68,15 @@ def main():
         #render aang
         aang.render(WINDOW)
 
+        #rendering and move Bullets
+        for bullet in bulletList:
+            bullet.render(WINDOW)
+            bullet.move()
+            if bullet.x >= WINDOW.get_width():
+                bulletList.remove(bullet)
+
+        
+
         # handle player movement
         # this gets a list of booleans showing which keys are currently pressed
         keysPressed = pygame.key.get_pressed()
@@ -79,6 +90,17 @@ def main():
             aang.x-=5
         elif keysPressed[pygame.K_RIGHT] == True and (aang.x + aang.width) <= WINDOW.get_width():
             aang.x+=5
+
+        #firing bullets
+        if keysPressed[pygame.K_e] == True:
+            bulletList.append(Bullet(aang.x + aang.width,aang.y + aang.height/2,"Earth"))
+        elif keysPressed[pygame.K_w] == True:
+            bulletList.append(Bullet(aang.x + aang.width,aang.y + aang.height/2,"Water"))
+        elif keysPressed[pygame.K_a] == True:
+            bulletList.append(Bullet(aang.x + aang.width,aang.y + aang.height/2,"Air"))
+        elif keysPressed[pygame.K_f] == True:
+            bulletList.append(Bullet(aang.x + aang.width,aang.y + aang.height/2,"Fire"))
+        
         
         # put code here that should be run every frame
         # of your game             
