@@ -1,4 +1,6 @@
+
 import pygame 
+import random
 from Enemy import Enemy
 from player import Player 
 ###########################
@@ -16,10 +18,21 @@ aangPic = pygame.image.load('Assets\Aang.png')
 aang = Player(0,0,aangPic)
 
 
-##### Make Enemies ####
-fireEnemy =  Enemy(200, 200, "fire")
-waterEnemy = Enemy(0,0, "water")
-earthEnemy = Enemy(100, 100, "earth")
+##### Make Enemies List ####
+enemyTypeList = ["fire", "water", "earth", "air"]
+levelVal = 5
+enemyList = []
+
+## Fills List With Random Enemies Based on Level Enemy Count ###
+
+
+for i in range(levelVal):
+    xPos = (random.randrange(500, 1000))
+    yPos = 650 - 150 
+    enemyType = (random.choice(enemyTypeList))
+    enemy = Enemy( xPos, yPos, enemyType )
+    enemyList.append(enemy)
+
 
 
 FPS = 60
@@ -57,11 +70,13 @@ def main():
         WINDOW.fill((0,255,0))
         
         WINDOW.blit(startScreenResized, (0, 0))
-            
-        #renders the enemies
-        fireEnemy.render(WINDOW, "fire")
-        waterEnemy.render(WINDOW, "water")
-        earthEnemy.render(WINDOW, "earth")
+
+        #Renders and moves to the left side of the sceen 
+        for i in enemyList:
+            i.render(WINDOW, i.type)
+            i.moveEnemy()
+            if i.x < 50:
+                enemyList.remove(i) 
 
         #render aang
         aang.render(WINDOW)
