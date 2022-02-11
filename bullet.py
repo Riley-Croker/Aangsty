@@ -3,7 +3,15 @@ import pygame
 
 class Bullet:
     speed = 5
-    hasMadeContact = False
+    hasMadeContact = False   
+    earth = pygame.image.load('Assets\RockProjectile.png')
+    earthResized = pygame.transform.scale(earth, (50, 50))
+    water = pygame.image.load('Assets\waterAttack.png')
+    waterResized = pygame.transform.scale(water, (50, 50))
+    fire = pygame.image.load('Assets\Fireball.png')
+    fireResized = pygame.transform.scale(fire, (50, 50))
+    air = pygame.image.load('Assets\Aang.png')
+    airResized = pygame.transform.scale(air, (50, 50))
 
     # constructor function CHANGE TO NO IMAGE ONCE GOT IMAGES
     def __init__(self, aX, aY, aType):
@@ -16,15 +24,14 @@ class Bullet:
 
     def render(self, aSurface):
         if self.type == "Earth":
-            tempColor = (255,215,0)
+            tempPic = self.earthResized
         elif self.type == "Water":
-            tempColor = (0,0,255)
+            tempPic = self.waterResized
         elif self.type == "Fire":
-            tempColor = (255,0,0)
+            tempPic = self.fireResized
         else:
-            tempColor = (255,255,255)
-        playerRect = pygame.Rect(self.x, self.y, 50, 50)
-        pygame.draw.rect(aSurface, tempColor, playerRect)
+            tempPic = self.airResized
+        aSurface.blit(tempPic, (self.x,self.y))
 
     def move(self):
         self.x += self.speed
