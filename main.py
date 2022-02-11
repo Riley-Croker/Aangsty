@@ -1,4 +1,5 @@
 import pygame
+from sqlalchemy import false
 from Enemy import Enemy
 from bullet import Bullet
 from player import Player 
@@ -24,6 +25,7 @@ earthEnemy = Enemy(100, 100, "earth")
 
 
 FPS = 60
+clock = pygame.time.Clock()
 
 WIDTH = 1200
 HEIGHT = 650
@@ -65,8 +67,9 @@ def main():
         waterEnemy.render(WINDOW, "water")
         earthEnemy.render(WINDOW, "earth")
 
-        #render aang
+        #render aang and update his timer
         aang.render(WINDOW)
+        aang.updateTime(clock)
 
         #rendering and move Bullets
         for bullet in bulletList:
@@ -92,14 +95,18 @@ def main():
             aang.x+=5
 
         #firing bullets
-        if keysPressed[pygame.K_e] == True:
+        if keysPressed[pygame.K_e] == True and aang.canFire:
             bulletList.append(Bullet(aang.x + aang.width,aang.y + aang.height/2,"Earth"))
-        elif keysPressed[pygame.K_w] == True:
+            aang.canFire = False
+        elif keysPressed[pygame.K_w] == True and aang.canFire:
             bulletList.append(Bullet(aang.x + aang.width,aang.y + aang.height/2,"Water"))
-        elif keysPressed[pygame.K_a] == True:
+            aang.canFire = False
+        elif keysPressed[pygame.K_a] == True and aang.canFire:
             bulletList.append(Bullet(aang.x + aang.width,aang.y + aang.height/2,"Air"))
-        elif keysPressed[pygame.K_f] == True:
+            aang.canFire = False
+        elif keysPressed[pygame.K_f] == True and aang.canFire:
             bulletList.append(Bullet(aang.x + aang.width,aang.y + aang.height/2,"Fire"))
+            aang.canFire = False
         
         
         # put code here that should be run every frame

@@ -5,6 +5,9 @@ class Player:
     health = 5
     speed = 10
     isDead = False
+    canFire = True
+    timeSinceLastBullet = 0
+    timeBetweenBullets = 500
 
     # constructor function
     def __init__(self, aX, aY, aImage):
@@ -16,3 +19,11 @@ class Player:
 
     def render(self, aSurface):
         aSurface.blit(self.image, (self.x,self.y))
+
+    def updateTime(self, aClock):
+        dt = aClock.tick()
+
+        self.timeSinceLastBullet += dt
+        if self.timeSinceLastBullet > self.timeBetweenBullets:
+            self.canFire = True
+            self.timeSinceLastBullet = 0
