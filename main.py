@@ -15,7 +15,7 @@ aangPic = pygame.image.load('Assets\Aang.png')
 ##### Player Stuff ########
 ###########################
 
-aang = Player(0,0,aangPic)
+aang = Player(0,470,aangPic)
 
 
 ##### Make Enemies List ####
@@ -92,6 +92,14 @@ def main():
             aang.x-=5
         elif keysPressed[pygame.K_RIGHT] == True and (aang.x + aang.width) <= WINDOW.get_width():
             aang.x+=5
+
+
+
+        ## player enemy collision controls
+        for i in enemyList:
+            if (i.x + 50) - aang.x < 10 and (i.y - 75) - aang.y < 10:
+                aang.setDead(True)
+                print("Dead")
         
         # put code here that should be run every frame
         # of your game             
@@ -99,5 +107,5 @@ def main():
 
 
 
-
 main()
+

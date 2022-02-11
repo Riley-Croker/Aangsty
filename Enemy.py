@@ -44,7 +44,8 @@ class Enemy:
     def moveEnemy(self):
         self.x -= self.speed
 
-    
+    def setDead(self, aBool):
+        self.isDead = aBool
   
 
     

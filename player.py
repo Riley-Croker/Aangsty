@@ -16,3 +16,6 @@ class Player:
 
     def render(self, aSurface):
         aSurface.blit(self.image, (self.x,self.y))
+
+    def setDead(self, aBool):
+        self.isDead = aBool    
