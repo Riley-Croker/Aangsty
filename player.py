@@ -7,7 +7,7 @@ class Player:
     isDead = False
     canFire = True
     timeSinceLastBullet = 0
-    timeBetweenBullets = 500
+    timeBetweenBullets = 1000
     aangClock = pygame.time.Clock()
 
     # constructor function

@@ -16,7 +16,7 @@ water = pygame.image.load('Assets\waterAttack.png')
 waterResized = pygame.transform.scale(water, (100, 100))
 fire = pygame.image.load('Assets\Fireball.png')
 fireResized = pygame.transform.scale(fire, (150, 75))
-air = pygame.image.load('Assets\Aang.png')
+air = pygame.image.load('Assets\AirSlash.png')
 airResized = pygame.transform.scale(air, (100, 100))
 
 ###########################
