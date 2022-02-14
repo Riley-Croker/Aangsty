@@ -17,16 +17,17 @@ earthImg = pygame.transform.scale(earthImg, (100, 150))
 class Enemy:
     ###Global Class Vars
     health = 5
-    speed = 2
     isDead = False
 
    
 
 #constructor function
-    def __init__(self, ax, ay, atype):
+    def __init__(self, ax, ay, atype, aspeed):
         self.x = ax
         self.y =ay
         self.type = atype
+        self.speed = aspeed
+
         
 
     
@@ -47,8 +48,7 @@ class Enemy:
     def setDead(self, aBool):
         self.isDead = aBool
   
-
-    
+50
 
 
 

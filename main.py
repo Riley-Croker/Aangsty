@@ -15,20 +15,27 @@ aangPic = pygame.image.load('Assets\Aang.png')
 ##### Player Stuff ########
 ###########################
 
-aang = Player(0,470,aangPic)
+aang = Player(0, 450, aangPic)
+player_height = aang.image.get_height()
+player_width = aang.image.get_height()
+
+print (player_height)
+print (player_width)
 
 
 ##### Make Enemies List ####
-enemyTypeList = ["fire", "water", "earth", "air"]
-levelVal = 5
+enemyTypeList = ["fire", "water", "earth"]
+levelVal = 10
 enemyList = []
+reposition = True
 
 ## Fills List With Random Enemies Based on Level Enemy Count ###
 for i in range(levelVal):
-    xPos = (random.randrange(500, 1000))
-    yPos = 650 - 150 
+    xPos = (random.randrange(1250, 3000, 50))
+    yPos = 500
     enemyType = (random.choice(enemyTypeList))
-    enemy = Enemy( xPos, yPos, enemyType )
+    enemySpeed = random.randrange(1,3)
+    enemy = Enemy( xPos, yPos, enemyType, enemySpeed )
     enemyList.append(enemy)
 
 
@@ -70,11 +77,15 @@ def main():
         WINDOW.blit(startScreenResized, (0, 0))
 
         #Renders and moves to the left side of the sceen 
+        
         for i in enemyList:
             i.render(WINDOW, i.type)
             i.moveEnemy()
-            if i.x < 50:
-                enemyList.remove(i) 
+            if i.x < 25:
+                enemyList.remove(i)
+            prevEnemy = i
+         
+
 
         #render aang
         aang.render(WINDOW)
@@ -97,9 +108,11 @@ def main():
 
         ## player enemy collision controls
         for i in enemyList:
-            if (i.x + 50) - aang.x < 10 and (i.y - 75) - aang.y < 10:
-                aang.setDead(True)
-                print("Dead")
+            if abs((i.x + 50 ) - (aang.x + player_width/2)) < player_width/2:
+                 if abs((i.y + 40) - (aang.y + player_height/2)) < player_height/2:
+                    aang.setDead(True)
+                    print(aang.isDead)
+                     
         
         # put code here that should be run every frame
         # of your game             
