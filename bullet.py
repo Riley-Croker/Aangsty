@@ -31,5 +31,5 @@ class Bullet:
         if self.bottom >= enemy.top and self.top <= enemy.bottom and self.right >= enemy.left and self.left <= enemy.right: 
             self.hasMadeContact = True
             #Typing
-            if(self.type == "Fire" and enemy.type == "earth") or (self.type == "Water" and enemy.type == "fire") or (self.type == "Earth" and enemy.type == "water"):
+            if(self.type == "Fire" and enemy.type == "earth") or (self.type == "Water" and enemy.type == "fire") or (self.type == "Earth" and enemy.type == "water") or (self.type == "Air" and enemy.type == "azula"):
                 enemy.setDead(True)

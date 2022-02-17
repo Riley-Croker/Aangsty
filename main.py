@@ -31,7 +31,7 @@ player_width = aang.image.get_height()
 
 
 ##### Make Enemies List ####
-enemyTypeList = ["fire", "water", "earth"]
+enemyTypeList = ["fire", "water", "earth", "azula"]
 levelVal = 10
 enemyList = []
 reposition = True
