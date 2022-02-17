@@ -48,7 +48,7 @@ class Enemy:
     def setDead(self, aBool):
         self.isDead = aBool
   
-50
+
 
 
 
