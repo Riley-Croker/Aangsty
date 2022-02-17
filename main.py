@@ -113,7 +113,6 @@ def main():
             bullet.move()
             if bullet.x >= WINDOW.get_width():
                 bulletList.remove(bullet)
-                print("Remove bullet")
 
         
 

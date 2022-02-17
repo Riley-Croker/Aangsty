@@ -27,6 +27,9 @@ class Bullet:
         self.right = self.x + self.width
 
     def collision(self, enemy):
-        if self.bottom >= enemy.top and self.top <= enemy.bottom and self.right >= enemy.left:
-            enemy.setDead(True)
+        # collisions
+        if self.bottom >= enemy.top and self.top <= enemy.bottom and self.right >= enemy.left: 
             self.hasMadeContact = True
+            #Typing
+            if(self.type == "Fire" and enemy.type == "earth") or (self.type == "Water" and enemy.type == "fire") or (self.type == "Earth" and enemy.type == "water"):
+                enemy.setDead(True)
