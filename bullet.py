@@ -5,7 +5,7 @@ class Bullet:
     speed = 5
     hasMadeContact = False   
 
-    # constructor function CHANGE TO NO IMAGE ONCE GOT IMAGES
+    # constructor function
     def __init__(self, aX, aY, aType, aImage):
         self.x = aX
         self.y = aY
@@ -14,7 +14,7 @@ class Bullet:
         self.height = aImage.get_height()
         self.width = aImage.get_width()
         self.top = self.y
-        self.bottom = self.y + self.width
+        self.bottom = self.y + self.height
         self.left = self.x
         self.right = self.x + self.width
 
@@ -23,8 +23,10 @@ class Bullet:
 
     def move(self):
         self.x += self.speed
+        self.left = self.x
+        self.right = self.x + self.width
 
     def collision(self, enemy):
         if self.bottom >= enemy.top and self.top <= enemy.bottom and self.right >= enemy.left:
-            enemy.isDead = True
+            enemy.setDead(True)
             self.hasMadeContact = True

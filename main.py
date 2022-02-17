@@ -87,7 +87,8 @@ def main():
         #Renders and moves to the left side of the sceen 
         
         for i in enemyList:
-            i.render(WINDOW, i.type)
+            if(not i.isDead):
+                i.render(WINDOW, i.type)
             i.moveEnemy()
             if i.x < 25:
                 enemyList.remove(i)
@@ -99,12 +100,20 @@ def main():
         aang.render(WINDOW)
         aang.updateTime()
 
-        #rendering and move Bullets
+        #rendering, collision, and move Bullets
         for bullet in bulletList:
-            bullet.render(WINDOW)
+            for enemy in enemyList:
+                bullet.collision(enemy)
+                if enemy.isDead:
+                    enemyList.remove(enemy)
+            if (not bullet.hasMadeContact):
+                bullet.render(WINDOW)
+            else:
+                bulletList.remove(bullet)
             bullet.move()
             if bullet.x >= WINDOW.get_width():
                 bulletList.remove(bullet)
+                print("Remove bullet")
 
         
 

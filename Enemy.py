@@ -37,7 +37,7 @@ class Enemy:
             self.width = 100
             self.height = 150
         self.top = self.y
-        self.bottom = self.y + self.width
+        self.bottom = self.y + self.height
         self.left = self.x
         self.right = self.x + self.width
         
@@ -56,6 +56,8 @@ class Enemy:
 
     def moveEnemy(self):
         self.x -= self.speed
+        self.left = self.x
+        self.right = self.x + self.width
 
     def setDead(self, aBool):
         self.isDead = aBool
