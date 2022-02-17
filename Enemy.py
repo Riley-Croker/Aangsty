@@ -25,8 +25,12 @@ class Enemy:
 #constructor function
     def __init__(self, ax, ay, atype):
         self.x = ax
-        self.y =ay
+        self.y = ay
         self.type = atype
+        self.top = self.y
+        self.bottom = self.y + self.width
+        self.left = self.x
+        self.right = self.x + self.width
         
 
     
