@@ -28,3 +28,5 @@ class Player:
         if self.timeSinceLastBullet > self.timeBetweenBullets:
             self.canFire = True
             self.timeSinceLastBullet = 0
+    def setDead(self, aBool):
+        self.isDead = aBool    
