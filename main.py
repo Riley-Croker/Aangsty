@@ -19,6 +19,28 @@ fire = pygame.image.load('Assets\Fireball.png')
 fireResized = pygame.transform.scale(fire, (150, 75))
 air = pygame.image.load('Assets\AirSlash.png')
 airResized = pygame.transform.scale(air, (100, 100))
+level1Screen = pygame.image.load('Assets\EarthScreen.png')
+level1ScreenResize =pygame.transform.scale(level1Screen, (1200, 650))
+
+level2Screen = pygame.image.load('Assets\WaterScreen.png')
+level2ScreenResize =pygame.transform.scale(level2Screen, (1200, 650))
+
+level3Screen = pygame.image.load('Assets\FireScreen.png')
+level3ScreenResize =pygame.transform.scale(level3Screen, (1200, 650))
+
+
+level4Screen = pygame.image.load('Assets\AirScreen.png')
+level4ScreenResize =pygame.transform.scale(level4Screen, (1200, 650))
+
+
+WinScreen = pygame.image.load('Assets\WinScreen.png')
+WinScreenResize =pygame.transform.scale(WinScreen, (1200, 650))
+
+###########################
+####### Level Setup #######
+###########################
+
+bulletList = []
 
 ###########################
 ##### Player Stuff ########
@@ -28,33 +50,33 @@ aang = Player(0, 450, aangPic)
 player_height = aang.image.get_height()
 player_width = aang.image.get_height()
 
-print (player_height)
-print (player_width)
 
-
+############################
 ##### Make Enemies List ####
-enemyTypeList = ["fire", "water", "earth"]
-levelVal = 10
+############################
+enemyTypeList = ["fire", "water", "earth", "air"]
+enemyNum = 2
 enemyList = []
-reposition = True
+maxSpeed = 3
 
 ## Fills List With Random Enemies Based on Level Enemy Count ###
-for i in range(levelVal):
+for i in range(enemyNum):
     xPos = (random.randrange(1250, 3000, 50))
     yPos = 500
     enemyType = (random.choice(enemyTypeList))
-    enemySpeed = random.randrange(1,3)
+    enemySpeed = random.randrange(2,maxSpeed)
     enemy = Enemy( xPos, yPos, enemyType, enemySpeed )
     enemyList.append(enemy)
 
-
-
+############################
+#### Window and Text #######
+############################
+pygame.init()
 FPS = 60
-
 WIDTH = 1200
 HEIGHT = 650
+font = pygame.font.SysFont('arial', 55)
 
-bulletList = []
 
 # make the game window object
 WINDOW = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -62,12 +84,78 @@ WINDOW = pygame.display.set_mode((WIDTH, HEIGHT))
 # name the game window
 pygame.display.set_caption("Aangsty")
 
+############################
+##### Helper Functions #####
+############################
+
+
+#Renders and moves to the left side of the sceen 
+def animateEnemy():
+     for i in enemyList:
+        i.render(WINDOW, i.type)
+        i.moveEnemy()
+        if i.x < 25:
+            enemyList.remove(i)
+
+
+#rendering and move Bullets
+def animateBullets():
+    for bullet in bulletList:
+        bullet.render(WINDOW)
+        bullet.move()
+        if bullet.x >= WINDOW.get_width():
+            bulletList.remove(bullet)
+
+# handle player movement
+# this gets a list of booleans showing which keys are currently pressed
+def playerMove():
+    keysPressed = pygame.key.get_pressed()
+    # player movement
+    if keysPressed[pygame.K_UP] == True and aang.y >= 0:
+        aang.y-=5
+    elif keysPressed[pygame.K_DOWN] == True and (aang.y + aang.height) <= WINDOW.get_height():
+        aang.y+=5
+    if keysPressed[pygame.K_LEFT] == True and aang.x >= 0:
+        aang.x-=5
+    elif keysPressed[pygame.K_RIGHT] == True and (aang.x + aang.width) <= WINDOW.get_width():
+        aang.x+=5
+
+#firing bullets (-50 is half the bullet height, change if bullet height is ever changed)
+def fireBullets():
+    keysPressed = pygame.key.get_pressed()
+    if keysPressed[pygame.K_e] == True and aang.canFire:
+            bulletList.append(Bullet(aang.x + aang.width,aang.y + aang.height/2-50,"Earth",earthResized))
+            aang.canFire = False
+    elif keysPressed[pygame.K_w] == True and aang.canFire:
+        bulletList.append(Bullet(aang.x + aang.width,aang.y + aang.height/2-50,"Water",waterResized))
+        aang.canFire = False
+    elif keysPressed[pygame.K_a] == True and aang.canFire:
+        bulletList.append(Bullet(aang.x + aang.width,aang.y + aang.height/2-50,"Air",airResized))
+        aang.canFire = False
+    elif keysPressed[pygame.K_f] == True and aang.canFire:
+        bulletList.append(Bullet(aang.x + aang.width,aang.y + aang.height/2-50,"Fire",fireResized))
+        aang.canFire = False
+
+# creates a hit box around aang that if crossed by an enemy 
+# will cause boolean isDead to turn true and game to end   
+# to returns a boolean true when dead and false when alive       
+def playerEnemyCollision():
+   
+    for i in enemyList:
+        if abs((i.x + 50 ) - (aang.x + player_width/2)) < player_width/2:
+            if abs((i.y + 40) - (aang.y + player_height/2)) < player_height/2:
+                aang.setDead(True)
+                print(aang.isDead)
+       
+
+
+
 # main game function
 def main():
     # make a clock object that will be used
     # to make the game run at a consistent framerate
     clock = pygame.time.Clock()
- 
+    levelVal = 0
     # make a boolean that represents whether the game should continue to run or not
     running = True
     # while the game is running
@@ -81,78 +169,181 @@ def main():
             if event.type == pygame.QUIT:
                 running = False
         
-        # This fills the game window to be the given RGB color
-        WINDOW.fill((0,255,0))
-        
-        WINDOW.blit(startScreenResized, (0, 0))
+      
+    
+        #Start Screen Display
 
-        #Renders and moves to the left side of the sceen 
-        
-        for i in enemyList:
-            i.render(WINDOW, i.type)
-            i.moveEnemy()
-            if i.x < 25:
-                enemyList.remove(i)
-            prevEnemy = i
-         
+        if levelVal == 0:
+            # This fills the game window to be the given RGB color
+            WINDOW.fill((0,255,0))
+            WINDOW.blit(startScreenResized, (0, 0))
+            
+            
+            startMessage = "Press SPACE to play"
+            instructMessage = "Press ENTER for instructions "
+            start = font.render(startMessage, True, (0,0,0))
+            WINDOW.blit(start, (390, 50))
 
+            instruct = font.render(instructMessage, True, (0,0,0))
+            WINDOW.blit(instruct, (300, 150))
 
-        #render aang and update his timer
-        aang.render(WINDOW)
-        aang.updateTime()
-
-        #rendering and move Bullets
-        for bullet in bulletList:
-            bullet.render(WINDOW)
-            bullet.move()
-            if bullet.x >= WINDOW.get_width():
-                bulletList.remove(bullet)
-
+            keysPressed = pygame.key.get_pressed()
+            if keysPressed[pygame.K_SPACE] == True :
+                  levelVal = 1
+            elif keysPressed[pygame.K_RETURN] == True :
+                  levelVal = 7
+            
+            pygame.display.update()
         
 
-        # handle player movement
-        # this gets a list of booleans showing which keys are currently pressed
-        keysPressed = pygame.key.get_pressed()
+        #First Level Game Running Block
+        elif levelVal == 1: 
+            WINDOW.fill((0,255,0))
+            WINDOW.blit(level1ScreenResize, (0, 0))
 
-        # player movement
-        if keysPressed[pygame.K_UP] == True and aang.y >= 0:
-            aang.y-=5
-        elif keysPressed[pygame.K_DOWN] == True and (aang.y + aang.height) <= WINDOW.get_height():
-            aang.y+=5
-        if keysPressed[pygame.K_LEFT] == True and aang.x >= 0:
-            aang.x-=5
-        elif keysPressed[pygame.K_RIGHT] == True and (aang.x + aang.width) <= WINDOW.get_width():
-            aang.x+=5
-
-        #firing bullets (-50 is half the bullet height, change if bullet height is ever changed)
-        if keysPressed[pygame.K_e] == True and aang.canFire:
-            bulletList.append(Bullet(aang.x + aang.width,aang.y + aang.height/2-50,"Earth",earthResized))
-            aang.canFire = False
-        elif keysPressed[pygame.K_w] == True and aang.canFire:
-            bulletList.append(Bullet(aang.x + aang.width,aang.y + aang.height/2-50,"Water",waterResized))
-            aang.canFire = False
-        elif keysPressed[pygame.K_a] == True and aang.canFire:
-            bulletList.append(Bullet(aang.x + aang.width,aang.y + aang.height/2-50,"Air",airResized))
-            aang.canFire = False
-        elif keysPressed[pygame.K_f] == True and aang.canFire:
-            bulletList.append(Bullet(aang.x + aang.width,aang.y + aang.height/2-50,"Fire",fireResized))
-            aang.canFire = False
-        
+            startMessage = "Level 1"
+            start = font.render(startMessage, True, (0,0,0))
+            WINDOW.blit(start, (500, 20))
 
 
-        ## player enemy collision controls
-        for i in enemyList:
-            if abs((i.x + 50 ) - (aang.x + player_width/2)) < player_width/2:
-                 if abs((i.y + 40) - (aang.y + player_height/2)) < player_height/2:
-                    aang.setDead(True)
-                    print(aang.isDead)
-                     
-        
-        # put code here that should be run every frame
-        # of your game             
+            #render aang and update his timer
+            aang.render(WINDOW)
+            aang.updateTime()
+            playerMove()
+            animateEnemy()
+            animateBullets()
+            fireBullets()
+            playerEnemyCollision()
+           
+            if aang.isDead == True: levelVal = 0
+
+            # This sets up the enemy list for the next level # 
+            # It also provides a delay for the player to rest #
+            if bool(enemyList) == False:
+                for i in range(5):
+                    xPos = (random.randrange(1250, 3000, 50))
+                    yPos = 500
+                    enemyType = (random.choice(enemyTypeList))
+                    enemySpeed = random.randrange(2,maxSpeed)
+                    enemy = Enemy( xPos, yPos, enemyType, enemySpeed )
+                    enemyList.append(enemy)
+                levelVal = 2
+                pygame.time.delay(2000)
+            pygame.display.update()
+
+        elif levelVal == 2: 
+            WINDOW.fill((0,255,0))
+            WINDOW.blit(level2ScreenResize, (0, 0))
+
+            startMessage = "Level 2"
+            start = font.render(startMessage, True, (0,0,0))
+            WINDOW.blit(start, (500, 20))
+
+            #render aang and update his timer
+            aang.render(WINDOW)
+            aang.updateTime()
+            playerMove()
+            animateEnemy()
+            animateBullets()
+            fireBullets()
+            playerEnemyCollision()
+            
+            if aang.isDead == True:
+                levelVal = 0
+
+            
+            # This sets up the enemy list for the next level # 
+            # It also provides a delay for the player to rest #
+            if bool(enemyList) == False:
+                for i in range(10):
+                    xPos = (random.randrange(1250, 3000, 50))
+                    yPos = 500
+                    enemyType = (random.choice(enemyTypeList))
+                    enemySpeed = random.randrange(2,7)
+                    enemy = Enemy( xPos, yPos, enemyType, enemySpeed )
+                    enemyList.append(enemy)
+                levelVal = 3
+                pygame.time.delay(2000)
+
+            pygame.display.update()  
+
+        elif levelVal == 3:
+            WINDOW.fill((0,255,0))
+            WINDOW.blit(level3ScreenResize, (0, 0))
+
+            startMessage = "Level 3"
+            start = font.render(startMessage, True, (0,0,0))
+            WINDOW.blit(start, (500, 20))
+
+            #render aang and update his timer
+            aang.render(WINDOW)
+            aang.updateTime()
+            playerMove()
+            animateEnemy()
+            animateBullets()
+            fireBullets()
+            playerEnemyCollision()
+            
+            if aang.isDead == True:
+                levelVal = 0
+
+            
+            # This sets up the enemy list for the next level # 
+            # It also provides a delay for the player to rest #
+            if bool(enemyList) == False:
+                for i in range(10):
+                    xPos = (random.randrange(1250, 3000, 50))
+                    yPos = 500
+                    enemyType = (random.choice(enemyTypeList))
+                    enemySpeed = random.randrange(2,9)
+                    enemy = Enemy( xPos, yPos, enemyType, enemySpeed )
+                    enemyList.append(enemy)
+                pygame.time.delay(2000)
+                levelVal = 4
+
+            pygame.display.update()
+
+        elif levelVal == 4:
+            WINDOW.fill((0,255,0))
+            WINDOW.blit(level4ScreenResize, (0, 0))
+
+            startMessage = "Level 4"
+            start = font.render(startMessage, True, (0,0,0))
+            WINDOW.blit(start, (500, 20))
+
+            #render aang and update his timer
+            aang.render(WINDOW)
+            aang.updateTime()
+            playerMove()
+            animateEnemy()
+            animateBullets()
+            fireBullets()
+            playerEnemyCollision()
+            
+            if aang.isDead == True:
+                levelVal = 0
+
+            
+            # This sets up the enemy list for the next level # 
+            # It also provides a delay for the player to rest #
+            if bool(enemyList) == False:
+                for i in range(10):
+                    xPos = (random.randrange(1250, 3000, 50))
+                    yPos = 500
+                    enemyType = (random.choice(enemyTypeList))
+                    enemySpeed = random.randrange(2,9)
+                    enemy = Enemy( xPos, yPos, enemyType, enemySpeed )
+                    enemyList.append(enemy)
+                pygame.time.delay(2000)
+                levelVal = 5
+
+            pygame.display.update()   
+
+
+        elif levelVal == 5:
+            WINDOW.fill((0,255,0))
+            WINDOW.blit(WinScreenResize, (0, 0))
         pygame.display.update()
-
-
 
 main()
 
