@@ -28,8 +28,6 @@ aang = Player(0, 450, aangPic)
 player_height = aang.image.get_height()
 player_width = aang.image.get_height()
 
-print (player_height)
-print (player_width)
 
 
 ##### Make Enemies List ####

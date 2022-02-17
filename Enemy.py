@@ -27,6 +27,15 @@ class Enemy:
         self.y = ay
         self.type = atype
         self.speed = aspeed
+        if(atype == "fire"):
+            self.width = 100
+            self.height = 155
+        elif(atype == "water"):
+            self.width = 100
+            self.height = 165
+        elif(atype == "earth"):
+            self.width = 100
+            self.height = 150
         self.top = self.y
         self.bottom = self.y + self.width
         self.left = self.x
