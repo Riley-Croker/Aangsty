@@ -5,6 +5,21 @@ from Enemy import Enemy
 from bullet import Bullet
 from player import Player 
 ###########################
+######### SOUND ###########
+###########################
+
+pygame.mixer.init()
+
+airSound = pygame.mixer.Sound("Assets/air.mp3")
+fireSound = pygame.mixer.Sound("Assets/fireballSound.mp3")
+waterSound = pygame.mixer.Sound("Assets/water.mp3")
+earthSound = pygame.mixer.Sound("Assets/earth.mp3")
+azulaScream = pygame.mixer.Sound("Assets/azulaScream.mp3")
+fireScream = pygame.mixer.Sound("Assets/fireScream.mp3")
+waterScream = pygame.mixer.Sound("Assets/waterScream.mp3")
+earthScream = pygame.mixer.Sound("Assets/earthScream.mp3")
+
+###########################
 ######### IMAGES ##########
 ###########################
 
@@ -214,19 +229,7 @@ def main():
         aang.render(WINDOW)
         aang.updateTime()
 
-        #rendering, collision, and move Bullets
-        # for bullet in bulletList:
-        #     for enemy in enemyList:
-        #         bullet.collision(enemy)
-        #         if enemy.isDead:
-        #             enemyList.remove(enemy)
-        #     if (not bullet.hasMadeContact):
-        #         bullet.render(WINDOW)
-        #     else:
-        #         bulletList.remove(bullet)
-        #     bullet.move()
-        #     if bullet.x >= WINDOW.get_width():
-        #         bulletList.remove(bullet)
+
         if levelVal == 0:
             # This fills the game window to be the given RGB color
             WINDOW.fill((0,255,0))
