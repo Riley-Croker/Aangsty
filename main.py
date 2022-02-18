@@ -79,7 +79,7 @@ enemyTypeList = ["fire", "water", "earth", "azula"]
 levelVal = 10
 enemyNum = 2
 enemyList = []
-maxSpeed = 3
+maxSpeed = 4
 
 ## Fills List With Random Enemies Based on Level Enemy Count ###
 for i in range(enemyNum):
@@ -207,6 +207,7 @@ def main():
     running = True
     # while the game is running
     playloseSound = True
+    playWinSound = True
     while running:
 	    # this makes it so this function can run at most FPS times/sec
         clock.tick(FPS)
@@ -220,16 +221,7 @@ def main():
       
     
         #Start Screen Display
-
-        #Renders and moves to the left side of the sceen 
-        
-        for i in enemyList:
-            if(not i.isDead):
-                i.render(WINDOW, i.type)
-                i.moveEnemy()
-                if i.x < -5:
-                    i.setPosition((random.randrange(1250, 2500, 50)), 400)
-
+    
          
 
 
@@ -343,6 +335,7 @@ def main():
             # This sets up the enemy list for the next level # 
             # It also provides a delay for the player to rest #
             if bool(enemyList) == False:
+                bulletList.clear()
                 for i in range(5):
                     xPos = (random.randrange(1250, 3000, 50))
                     yPos = (random.randrange(50, 400, 25))
@@ -378,6 +371,7 @@ def main():
             # This sets up the enemy list for the next level # 
             # It also provides a delay for the player to rest #
             if bool(enemyList) == False:
+                bulletList.clear()
                 for i in range(6):
                     xPos = (random.randrange(1250, 3000, 50))
                     yPos = (random.randrange(50, 400, 25))
@@ -414,6 +408,7 @@ def main():
             # This sets up the enemy list for the next level # 
             # It also provides a delay for the player to rest #
             if bool(enemyList) == False:
+                bulletList.clear()
                 for i in range(7):
                     xPos = (random.randrange(1250, 3000, 50))
                     yPos = (random.randrange(50, 400, 25))
@@ -450,6 +445,7 @@ def main():
             # This sets up the enemy list for the next level # 
             # It also provides a delay for the player to rest #
             if bool(enemyList) == False:
+                bulletList.clear()
                 for i in range(10):
                     xPos = (random.randrange(1250, 3000, 50))
                     yPos = (random.randrange(50, 400, 25))
@@ -466,7 +462,9 @@ def main():
         elif levelVal == 5:
             WINDOW.fill((0,255,0))
             WINDOW.blit(WinScreenResize, (0, 0))
-            winSound.play()
+            if playWinSound :
+                winSound.play()
+                playWinSound = False
             pygame.display.update()
 
     
