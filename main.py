@@ -28,10 +28,8 @@ level2ScreenResize =pygame.transform.scale(level2Screen, (1200, 650))
 level3Screen = pygame.image.load('Assets\FireScreen.png')
 level3ScreenResize =pygame.transform.scale(level3Screen, (1200, 650))
 
-
 level4Screen = pygame.image.load('Assets\AirScreen.png')
 level4ScreenResize =pygame.transform.scale(level4Screen, (1200, 650))
-
 
 WinScreen = pygame.image.load('Assets\WinScreen.png')
 WinScreenResize =pygame.transform.scale(WinScreen, (1200, 650))
@@ -100,8 +98,12 @@ def animateEnemy():
      for i in enemyList:
         i.render(WINDOW, i.type)
         i.moveEnemy()
-        if i.x < 25:
-            enemyList.remove(i)
+        if i.x < 0:  
+            i.setPostion((random.randrange(1250, 3000, 50)),500)
+
+        ### HERE IS WHERE THE ENEMIES CAN BE REMOVED FROM LIST WHEN HIT
+        #if bullet hit detection 
+         #enemyList.remove(i)
 
 
 #rendering and move Bullets
@@ -250,7 +252,7 @@ def main():
             keysPressed = pygame.key.get_pressed()
             if keysPressed[pygame.K_SPACE] == True :
                   levelVal = 0
-            
+                  pygame.time.delay(200)
             pygame.display.update()
 
         #First Level Game Running Block

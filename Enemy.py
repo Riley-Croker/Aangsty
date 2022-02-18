@@ -51,6 +51,10 @@ class Enemy:
 
     def setDead(self, aBool):
         self.isDead = aBool
+
+    def setPostion(self, ax ,ay):
+        self.x = ax
+        self.y = ay
   
 
 
