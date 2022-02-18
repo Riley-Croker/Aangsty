@@ -84,7 +84,7 @@ maxSpeed = 3
 ## Fills List With Random Enemies Based on Level Enemy Count ###
 for i in range(enemyNum):
     xPos = (random.randrange(1250, 3000, 50))
-    yPos = (random.randrange(50, 500, 25))
+    yPos = (random.randrange(50, 400, 25))
     enemyType = (random.choice(enemyTypeList))
     enemySpeed = random.randrange(2,maxSpeed)
     enemy = Enemy( xPos, yPos, enemyType, enemySpeed )
@@ -116,8 +116,8 @@ def animateEnemy():
      for i in enemyList:
         i.render(WINDOW, i.type)
         i.moveEnemy()
-        if i.x < 0:  
-            i.setPostion((random.randrange(1250, 3000, 50)),500)
+        if i.x < 0: 
+            i.setPostion((random.randrange(1250, 3000, 50)),400)
         
 
         ### HERE IS WHERE THE ENEMIES CAN BE REMOVED FROM LIST WHEN HIT
@@ -206,6 +206,7 @@ def main():
     # make a boolean that represents whether the game should continue to run or not
     running = True
     # while the game is running
+    playloseSound = True
     while running:
 	    # this makes it so this function can run at most FPS times/sec
         clock.tick(FPS)
@@ -225,9 +226,9 @@ def main():
         for i in enemyList:
             if(not i.isDead):
                 i.render(WINDOW, i.type)
-            i.moveEnemy()
-            if i.x < -5:
-                i.setPosition((random.randrange(1250, 2500, 50)), 500)
+                i.moveEnemy()
+                if i.x < -5:
+                    i.setPosition((random.randrange(1250, 2500, 50)), 400)
 
          
 
@@ -267,9 +268,14 @@ def main():
             startMessage = "You Lost"
             start = font.render(startMessage, True, (0,0,0))
             WINDOW.blit(start, (500, 20))
+            enemyList.clear()
+            bulletList.clear()
 
-            loseSound.play()
+            if playloseSound : 
+                loseSound.play()
+                playloseSound = False
             pygame.display.update()
+            
 
         #instruction Screen 
         elif levelVal == 7: 
@@ -339,7 +345,7 @@ def main():
             if bool(enemyList) == False:
                 for i in range(5):
                     xPos = (random.randrange(1250, 3000, 50))
-                    yPos = (random.randrange(50, 500, 25))
+                    yPos = (random.randrange(50, 400, 25))
                     enemyType = (random.choice(enemyTypeList))
                     enemySpeed = random.randrange(2,maxSpeed)
                     enemy = Enemy( xPos, yPos, enemyType, enemySpeed )
@@ -374,7 +380,7 @@ def main():
             if bool(enemyList) == False:
                 for i in range(6):
                     xPos = (random.randrange(1250, 3000, 50))
-                    yPos = (random.randrange(50, 500, 25))
+                    yPos = (random.randrange(50, 400, 25))
                     enemyType = (random.choice(enemyTypeList))
                     enemySpeed = random.randrange(2,maxSpeed)
                     enemy = Enemy( xPos, yPos, enemyType, enemySpeed )
@@ -410,7 +416,7 @@ def main():
             if bool(enemyList) == False:
                 for i in range(7):
                     xPos = (random.randrange(1250, 3000, 50))
-                    yPos = (random.randrange(50, 500, 25))
+                    yPos = (random.randrange(50, 400, 25))
                     enemyType = (random.choice(enemyTypeList))
                     enemySpeed = random.randrange(2,maxSpeed)
                     enemy = Enemy( xPos, yPos, enemyType, enemySpeed )
@@ -446,7 +452,7 @@ def main():
             if bool(enemyList) == False:
                 for i in range(10):
                     xPos = (random.randrange(1250, 3000, 50))
-                    yPos = (random.randrange(50, 500, 25))
+                    yPos = (random.randrange(50, 400, 25))
                     enemyType = (random.choice(enemyTypeList))
                     enemySpeed = random.randrange(2,maxSpeed)
                     enemy = Enemy( xPos, yPos, enemyType, enemySpeed )
