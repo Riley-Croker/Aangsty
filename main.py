@@ -55,11 +55,10 @@ player_height = aang.image.get_height()
 player_width = aang.image.get_height()
 
 
-
 ############################
 ##### Make Enemies List ####
-############################
-enemyTypeList = ["fire", "water", "earth", "air"]
+enemyTypeList = ["fire", "water", "earth", "azula"]
+levelVal = 10
 enemyNum = 2
 enemyList = []
 maxSpeed = 3
@@ -101,6 +100,18 @@ def animateEnemy():
         i.moveEnemy()
         if i.x < 0:  
             i.setPostion((random.randrange(1250, 3000, 50)),500)
+        for bullet in bulletList:
+            for enemy in enemyList:
+                bullet.collision(enemy)
+                if enemy.isDead:
+                    enemyList.remove(enemy)
+            if (not bullet.hasMadeContact):
+                bullet.render(WINDOW)
+            else:
+                bulletList.remove(bullet)
+            bullet.move()
+            if bullet.x >= WINDOW.get_width():
+                bulletList.remove(bullet)
 
         ### HERE IS WHERE THE ENEMIES CAN BE REMOVED FROM LIST WHEN HIT
         #if bullet hit detection 
@@ -188,9 +199,9 @@ def main():
             if(not i.isDead):
                 i.render(WINDOW, i.type)
             i.moveEnemy()
-            if i.x < 25:
-                enemyList.remove(i)
-            prevEnemy = i
+            if i.x < -5:
+                i.setPosition((random.randrange(1250, 2500, 50)), 500)
+
          
 
 
