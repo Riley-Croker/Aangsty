@@ -66,7 +66,7 @@ maxSpeed = 3
 ## Fills List With Random Enemies Based on Level Enemy Count ###
 for i in range(enemyNum):
     xPos = (random.randrange(1250, 3000, 50))
-    yPos = 500
+    yPos = (random.randrange(50, 500, 25))
     enemyType = (random.choice(enemyTypeList))
     enemySpeed = random.randrange(2,maxSpeed)
     enemy = Enemy( xPos, yPos, enemyType, enemySpeed )
@@ -100,18 +100,7 @@ def animateEnemy():
         i.moveEnemy()
         if i.x < 0:  
             i.setPostion((random.randrange(1250, 3000, 50)),500)
-        for bullet in bulletList:
-            for enemy in enemyList:
-                bullet.collision(enemy)
-                if enemy.isDead:
-                    enemyList.remove(enemy)
-            if (not bullet.hasMadeContact):
-                bullet.render(WINDOW)
-            else:
-                bulletList.remove(bullet)
-            bullet.move()
-            if bullet.x >= WINDOW.get_width():
-                bulletList.remove(bullet)
+        
 
         ### HERE IS WHERE THE ENEMIES CAN BE REMOVED FROM LIST WHEN HIT
         #if bullet hit detection 
@@ -121,10 +110,26 @@ def animateEnemy():
 #rendering and move Bullets
 def animateBullets():
     for bullet in bulletList:
-        bullet.render(WINDOW)
+        for enemy in enemyList:
+            bullet.collision(enemy)
+            if enemy.isDead:
+                enemyList.remove(enemy)
+                # if(enemy.type == "fire"):
+                #     fireScream.play()
+                # elif(enemy.type == "water"):
+                #     waterScream.play()
+                # elif(enemy.type == "earth"):
+                #     earthScream.play()
+                # elif(enemy.type == "azula"):
+                #     azulaScream.play()
+        if (not bullet.hasMadeContact):
+            bullet.render(WINDOW)
+        else:
+            bulletList.remove(bullet)
         bullet.move()
         if bullet.x >= WINDOW.get_width():
             bulletList.remove(bullet)
+
 
 # handle player movement
 # this gets a list of booleans showing which keys are currently pressed
@@ -210,18 +215,18 @@ def main():
         aang.updateTime()
 
         #rendering, collision, and move Bullets
-        for bullet in bulletList:
-            for enemy in enemyList:
-                bullet.collision(enemy)
-                if enemy.isDead:
-                    enemyList.remove(enemy)
-            if (not bullet.hasMadeContact):
-                bullet.render(WINDOW)
-            else:
-                bulletList.remove(bullet)
-            bullet.move()
-            if bullet.x >= WINDOW.get_width():
-                bulletList.remove(bullet)
+        # for bullet in bulletList:
+        #     for enemy in enemyList:
+        #         bullet.collision(enemy)
+        #         if enemy.isDead:
+        #             enemyList.remove(enemy)
+        #     if (not bullet.hasMadeContact):
+        #         bullet.render(WINDOW)
+        #     else:
+        #         bulletList.remove(bullet)
+        #     bullet.move()
+        #     if bullet.x >= WINDOW.get_width():
+        #         bulletList.remove(bullet)
         if levelVal == 0:
             # This fills the game window to be the given RGB color
             WINDOW.fill((0,255,0))
@@ -322,7 +327,7 @@ def main():
             if bool(enemyList) == False:
                 for i in range(5):
                     xPos = (random.randrange(1250, 3000, 50))
-                    yPos = 500
+                    yPos = (random.randrange(50, 500, 25))
                     enemyType = (random.choice(enemyTypeList))
                     enemySpeed = random.randrange(2,maxSpeed)
                     enemy = Enemy( xPos, yPos, enemyType, enemySpeed )
@@ -355,11 +360,11 @@ def main():
             # This sets up the enemy list for the next level # 
             # It also provides a delay for the player to rest #
             if bool(enemyList) == False:
-                for i in range(10):
+                for i in range(6):
                     xPos = (random.randrange(1250, 3000, 50))
-                    yPos = 500
+                    yPos = (random.randrange(50, 500, 25))
                     enemyType = (random.choice(enemyTypeList))
-                    enemySpeed = random.randrange(2,7)
+                    enemySpeed = random.randrange(2,maxSpeed)
                     enemy = Enemy( xPos, yPos, enemyType, enemySpeed )
                     enemyList.append(enemy)
                 levelVal = 3
@@ -391,11 +396,11 @@ def main():
             # This sets up the enemy list for the next level # 
             # It also provides a delay for the player to rest #
             if bool(enemyList) == False:
-                for i in range(10):
+                for i in range(7):
                     xPos = (random.randrange(1250, 3000, 50))
-                    yPos = 500
+                    yPos = (random.randrange(50, 500, 25))
                     enemyType = (random.choice(enemyTypeList))
-                    enemySpeed = random.randrange(2,9)
+                    enemySpeed = random.randrange(2,maxSpeed)
                     enemy = Enemy( xPos, yPos, enemyType, enemySpeed )
                     enemyList.append(enemy)
                 pygame.time.delay(2000)
@@ -429,9 +434,9 @@ def main():
             if bool(enemyList) == False:
                 for i in range(10):
                     xPos = (random.randrange(1250, 3000, 50))
-                    yPos = 500
+                    yPos = (random.randrange(50, 500, 25))
                     enemyType = (random.choice(enemyTypeList))
-                    enemySpeed = random.randrange(2,9)
+                    enemySpeed = random.randrange(2,maxSpeed)
                     enemy = Enemy( xPos, yPos, enemyType, enemySpeed )
                     enemyList.append(enemy)
                 pygame.time.delay(2000)
