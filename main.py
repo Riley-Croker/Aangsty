@@ -5,6 +5,21 @@ from Enemy import Enemy
 from bullet import Bullet
 from player import Player 
 ###########################
+######### SOUND ###########
+###########################
+
+pygame.mixer.init()
+
+airSound = pygame.mixer.Sound("Assets/air.mp3")
+fireSound = pygame.mixer.Sound("Assets/fireballSound.mp3")
+waterSound = pygame.mixer.Sound("Assets/water.mp3")
+earthSound = pygame.mixer.Sound("Assets/earth.mp3")
+azulaScream = pygame.mixer.Sound("Assets/azulaScream.mp3")
+fireScream = pygame.mixer.Sound("Assets/fireScream.mp3")
+waterScream = pygame.mixer.Sound("Assets/waterScream.mp3")
+earthScream = pygame.mixer.Sound("Assets/earthScream.mp3")
+
+###########################
 ######### IMAGES ##########
 ###########################
 
@@ -106,6 +121,14 @@ def main():
                 bullet.collision(enemy)
                 if enemy.isDead:
                     enemyList.remove(enemy)
+                    if(enemy.type == "fire"):
+                        fireScream.play()
+                    elif(enemy.type == "water"):
+                        waterScream.play()
+                    elif(enemy.type == "earth"):
+                        earthScream.play()
+                    elif(enemy.type == "azula"):
+                        azulaScream.play()
             if (not bullet.hasMadeContact):
                 bullet.render(WINDOW)
             else:
@@ -134,15 +157,19 @@ def main():
         if keysPressed[pygame.K_e] == True and aang.canFire:
             bulletList.append(Bullet(aang.x + aang.width,aang.y + aang.height/2-50,"Earth",earthResized))
             aang.canFire = False
+            earthSound.play()
         elif keysPressed[pygame.K_w] == True and aang.canFire:
             bulletList.append(Bullet(aang.x + aang.width,aang.y + aang.height/2-50,"Water",waterResized))
             aang.canFire = False
+            waterSound.play()
         elif keysPressed[pygame.K_a] == True and aang.canFire:
             bulletList.append(Bullet(aang.x + aang.width,aang.y + aang.height/2-50,"Air",airResized))
             aang.canFire = False
+            airSound.play()
         elif keysPressed[pygame.K_f] == True and aang.canFire:
             bulletList.append(Bullet(aang.x + aang.width,aang.y + aang.height/2-50,"Fire",fireResized))
             aang.canFire = False
+            fireSound.play()
         
 
 
