@@ -36,6 +36,12 @@ level4ScreenResize =pygame.transform.scale(level4Screen, (1200, 650))
 WinScreen = pygame.image.load('Assets\WinScreen.png')
 WinScreenResize =pygame.transform.scale(WinScreen, (1200, 650))
 
+LoseScreen = pygame.image.load('Assets\LoseScreen.png')
+LoseScreenResize =pygame.transform.scale(LoseScreen, (1200, 650))
+
+InstructScreen = pygame.image.load('Assets\instructScreen.png')
+InstructScreenResize =pygame.transform.scale(InstructScreen, (1200, 650))
+
 ###########################
 ####### Level Setup #######
 ###########################
@@ -195,6 +201,57 @@ def main():
             
             pygame.display.update()
         
+        #Losing Screen 
+        elif levelVal == 6: 
+            WINDOW.fill((0,255,0))
+            WINDOW.blit(LoseScreenResize, (0, 0))
+
+            startMessage = "You Lost"
+            start = font.render(startMessage, True, (0,0,0))
+            WINDOW.blit(start, (500, 20))
+            pygame.display.update()
+
+        #instruction Screen 
+        elif levelVal == 7: 
+            WINDOW.fill((0,255,0))
+            WINDOW.blit(InstructScreenResize, (0, 0))
+
+            startMessage = "Game Play: Press SPACE to return to home screen"
+            start = font.render(startMessage, True, (0,0,0))
+            WINDOW.blit(start, (100, 20))
+
+            instructM1 = "\n Press W to shoot water element "
+            instruct1 = font.render(instructM1, True, (0,0,0))
+
+            instructM2 = "\n Press E to shoot Earth element" 
+            instruct2 = font.render(instructM2, True, (0,0,0))
+
+            instructM3 = "\n Press A to shoot air element"
+            instruct3 = font.render(instructM3, True, (0,0,0))
+
+            instructM4 = "\n Press F to shoot fire element"
+            instruct4 = font.render(instructM4, True, (0,0,0))
+
+            instructM5 = "\n Use Arrow Keys to move"
+            instruct5 = font.render(instructM5, True, (0,0,0))
+
+            instructM6 = "\n Each enemy has a corresponding element weakness "
+            instruct6 = font.render(instructM6, True, (0,0,0))
+
+            WINDOW.blit(instruct1, (100, 150))
+            WINDOW.blit(instruct2, (100, 200))
+            WINDOW.blit(instruct3, (100, 250))
+            WINDOW.blit(instruct4, (100, 300))
+            WINDOW.blit(instruct5, (100, 350))
+            WINDOW.blit(instruct6, (100, 400))
+
+
+            
+            keysPressed = pygame.key.get_pressed()
+            if keysPressed[pygame.K_SPACE] == True :
+                  levelVal = 0
+            
+            pygame.display.update()
 
         #First Level Game Running Block
         elif levelVal == 1: 
@@ -215,7 +272,7 @@ def main():
             fireBullets()
             playerEnemyCollision()
            
-            if aang.isDead == True: levelVal = 0
+            if aang.isDead == True: levelVal = 6
 
             # This sets up the enemy list for the next level # 
             # It also provides a delay for the player to rest #
@@ -249,7 +306,7 @@ def main():
             playerEnemyCollision()
             
             if aang.isDead == True:
-                levelVal = 0
+                levelVal = 6
 
             
             # This sets up the enemy list for the next level # 
@@ -285,7 +342,7 @@ def main():
             playerEnemyCollision()
             
             if aang.isDead == True:
-                levelVal = 0
+                levelVal = 6
 
             
             # This sets up the enemy list for the next level # 
@@ -321,7 +378,7 @@ def main():
             playerEnemyCollision()
             
             if aang.isDead == True:
-                levelVal = 0
+                levelVal = 6
 
             
             # This sets up the enemy list for the next level # 
@@ -343,7 +400,9 @@ def main():
         elif levelVal == 5:
             WINDOW.fill((0,255,0))
             WINDOW.blit(WinScreenResize, (0, 0))
-        pygame.display.update()
+            pygame.display.update()
+
+    
 
 main()
 
