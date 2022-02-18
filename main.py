@@ -1,4 +1,5 @@
 
+import winsound
 import pygame 
 import random
 from Enemy import Enemy
@@ -18,6 +19,8 @@ azulaScream = pygame.mixer.Sound("Assets/azulaScream.mp3")
 fireScream = pygame.mixer.Sound("Assets/fireScream.mp3")
 waterScream = pygame.mixer.Sound("Assets/waterScream.mp3")
 earthScream = pygame.mixer.Sound("Assets/earthScream.mp3")
+winSound = pygame.mixer.Sound("Assets/win.mp3")
+loseSound = pygame.mixer.Sound("Assets/gameOver.mp3")
 
 ###########################
 ######### IMAGES ##########
@@ -129,14 +132,14 @@ def animateBullets():
             bullet.collision(enemy)
             if enemy.isDead:
                 enemyList.remove(enemy)
-                # if(enemy.type == "fire"):
-                #     fireScream.play()
-                # elif(enemy.type == "water"):
-                #     waterScream.play()
-                # elif(enemy.type == "earth"):
-                #     earthScream.play()
-                # elif(enemy.type == "azula"):
-                #     azulaScream.play()
+                if(enemy.type == "fire"):
+                    fireScream.play()
+                elif(enemy.type == "water"):
+                    waterScream.play()
+                elif(enemy.type == "earth"):
+                    earthScream.play()
+                elif(enemy.type == "azula"):
+                    azulaScream.play()
         if (not bullet.hasMadeContact):
             bullet.render(WINDOW)
         else:
@@ -164,17 +167,21 @@ def playerMove():
 def fireBullets():
     keysPressed = pygame.key.get_pressed()
     if keysPressed[pygame.K_e] == True and aang.canFire:
-            bulletList.append(Bullet(aang.x + aang.width,aang.y + aang.height/2-50,"Earth",earthResized))
-            aang.canFire = False
+        bulletList.append(Bullet(aang.x + aang.width,aang.y + aang.height/2-50,"Earth",earthResized))
+        aang.canFire = False
+        earthSound.play()
     elif keysPressed[pygame.K_w] == True and aang.canFire:
         bulletList.append(Bullet(aang.x + aang.width,aang.y + aang.height/2-50,"Water",waterResized))
         aang.canFire = False
+        waterSound.play()
     elif keysPressed[pygame.K_a] == True and aang.canFire:
         bulletList.append(Bullet(aang.x + aang.width,aang.y + aang.height/2-50,"Air",airResized))
         aang.canFire = False
+        airSound.play()
     elif keysPressed[pygame.K_f] == True and aang.canFire:
         bulletList.append(Bullet(aang.x + aang.width,aang.y + aang.height/2-50,"Fire",fireResized))
         aang.canFire = False
+        fireSound.play()
 
 # creates a hit box around aang that if crossed by an enemy 
 # will cause boolean isDead to turn true and game to end   
@@ -260,6 +267,8 @@ def main():
             startMessage = "You Lost"
             start = font.render(startMessage, True, (0,0,0))
             WINDOW.blit(start, (500, 20))
+
+            loseSound.play()
             pygame.display.update()
 
         #instruction Screen 
@@ -451,6 +460,7 @@ def main():
         elif levelVal == 5:
             WINDOW.fill((0,255,0))
             WINDOW.blit(WinScreenResize, (0, 0))
+            winSound.play()
             pygame.display.update()
 
     
